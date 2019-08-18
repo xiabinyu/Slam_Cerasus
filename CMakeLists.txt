@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(slam_cerasus)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+ add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -152,8 +152,8 @@ include_directories(
         src/SlamStart.cpp src/SlamStart_initialize.cpp src/SlamStart_terminate.cpp src/SlamStart_types.h src/tmwtypes.h
         src/SlamStart.h src/SlamStart_initialize.h src/SlamStart_terminate.h src/rtwtypes.h
 #predict
-        
- )
+
+         src/slam_cerasus_const.h)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
