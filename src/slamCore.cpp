@@ -5,7 +5,7 @@
 // File: slamCore.cpp
 //
 // MATLAB Coder version            : 4.1
-// C/C++ source code generated on  : 12-Aug-2019 10:58:49
+// C/C++ source code generated on  : 23-Sep-2019 13:55:32
 //
 
 // Include Files
@@ -72,8 +72,7 @@ void slamCore(double x[500], double P[2500], const double z_data[], const int
   double nbest;
   double outer;
   int j;
-  static const double R[4] = { 0.0049000000000000007, 0.0, 0.0,
-    0.00030461741978670857 };
+  static const double R[4] = { 1.0E-6, 0.0, 0.0, 7.6154354946677152E-7 };
 
   double dy;
   double xd;
@@ -102,8 +101,10 @@ void slamCore(double x[500], double P[2500], const double z_data[], const int
   double c_Gv[6];
   double c_Gz[4];
 
+  // 4.0
+  // 25.0
   //  observation noises
-  //  metres
+  //  metres0.07
   //  radians
   //
   //  Simple gated nearest-neighbour data-association. No clever feature
@@ -144,7 +145,7 @@ void slamCore(double x[500], double P[2500], const double z_data[], const int
     for (j = 0; j < Nf; j++) {
       compute_association(x, P, *(double (*)[2])&z_data[i << 1], R, 1 + j,
                           *length_x, &dy, &xd);
-      if ((dy < 4.0) && (xd < nbest)) {
+      if ((dy < 50.0) && (xd < nbest)) {
         //  if within gate, store nearest-neighbour
         nbest = xd;
         jbest = 1 + j;
@@ -176,7 +177,7 @@ void slamCore(double x[500], double P[2500], const double z_data[], const int
       zf[1 + fpos] = z_data[1 + (i << 1)];
       idf[n - 1] = jbest;
     } else {
-      if (outer > 25.0) {
+      if (outer > 150.0) {
         //  z too far to associate, but far enough to be a new feature
         l_zn++;
         fpos = i << 1;
@@ -296,11 +297,11 @@ void slamCore(double x[500], double P[2500], const double z_data[], const int
     v_data[jbest] = zf[i4] - d;
     fpos = ii_idx_1 - 1;
     v_data[fpos] = xd;
-    RR->data[(i5 + RR->size[0] * jbest) - 1] = 0.0049000000000000007;
+    RR->data[(i5 + RR->size[0] * jbest) - 1] = 1.0E-6;
     RR->data[(ii_idx_1 + RR->size[0] * (i5 - 1)) - 1] = 0.0;
     RR->data[(i5 + RR->size[0] * fpos) - 1] = 0.0;
     RR->data[(ii_idx_1 + RR->size[0] * (ii_idx_1 - 1)) - 1] =
-      0.00030461741978670857;
+      7.6154354946677152E-7;
   }
 
   KF_cholesky_update(x, P, v_data, v_size, RR, H, *length_x);

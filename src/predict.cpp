@@ -5,7 +5,7 @@
 // File: predict.cpp
 //
 // MATLAB Coder version            : 4.1
-// C/C++ source code generated on  : 13-Aug-2019 20:45:15
+// C/C++ source code generated on  : 23-Sep-2019 13:51:52
 //
 
 // Include Files
@@ -63,7 +63,7 @@ void predict(double x[500], double P[2500], double v, double g, double WB,
   double dv0[1];
   double dv1[1];
 
-  //  m/s
+  //  m/s0.3
   //  radians
   c = g + x[2];
   s = std::sin(c);
@@ -101,7 +101,7 @@ void predict(double x[500], double P[2500], double v, double g, double WB,
 
     b_Gu[i0] = 0.0;
     c = Gu[i0 + 3];
-    b_Gu[i0] = Gu[i0] * 0.09 + c * 0.0;
+    b_Gu[i0] = Gu[i0] * 0.010000000000000002 + c * 0.0;
     b_Gu[i0 + 3] = 0.0;
     b_Gu[i0 + 3] = Gu[i0] * 0.0 + c * 0.0027415567780803771;
     for (boffset = 0; boffset < 3; boffset++) {
