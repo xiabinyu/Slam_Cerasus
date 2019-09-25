@@ -34,12 +34,12 @@ class cerasus_slam_class {
     double AT_WAYPOINT= 1.0; // metres, distance from current waypoint at which to switch to next waypoint
     double NUMBER_LOOPS= 2; // number of loops through the waypoint list
 
-    double x[500];
-    double P[2500];
-    double z_data[720];
+    double* x=new double[500];
+    double* P=new double[2500];
+    double* z_data=new double[720];
     int z_size[2];
     int length_x;
-    double s_ang;
+    double s_ang=0;
     //Function from MatLab to c:
     //M2C_buildall();
     //M2C_slamcore();

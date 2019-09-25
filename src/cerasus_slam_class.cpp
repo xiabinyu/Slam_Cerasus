@@ -2,6 +2,7 @@
 // Created by xiabi on 2019/7/25.
 //
 
+#include <iostream>
 #include "SlamStart.h"
 //#include "main.h"
 #include "SlamStart_terminate.h"
@@ -29,6 +30,7 @@ cerasus_slam_class::cerasus_slam_class(){
 
 
 cerasus_slam_class::~cerasus_slam_class(){
+    predict_terminate();
 
     SlamStart_terminate();
 }
@@ -48,16 +50,14 @@ void cerasus_slam_class::Update_Slam_rpm(double rpm){
 
     /* Invoke the entry-point functions.
        You can call entry-point functions multiple times. */
-    predict(x, P, rpm, s_ang,WHEELBASE,
-            DT_CONTROLS,length_x);
+    predict(x, P, rpm, s_ang,WHEELBASE,DT_CONTROLS,length_x);
 
     /* Terminate the application.
        You do not need to do this more than one time. */
-    predict_terminate();
 }
 
-void cerasus_slam_class::Get_Slam(double* x,double* y,double* theta){
-    *x=x[0];
-    *y=x[1];
+void cerasus_slam_class::Get_Slam(double* X,double* Y,double* theta){
+    *X=x[0];
+    *Y=x[1];
     *theta=x[2];
 }
