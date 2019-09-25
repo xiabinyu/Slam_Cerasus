@@ -12,12 +12,12 @@ class cerasus_slam_class {
     double V= 4; // m/s
     double MAXG= 30*3.1415/180; // radians, maximum steering angle (-MAXG < g < MAXG)
     double RATEG= 180*3.1415/180; // rad/s, maximum rate of change in steer angle
-    double WHEELBASE= 4; // metres, vehicle wheel-base
+    double WHEELBASE= 0.26; // metres, vehicle wheel-base
     double DT_CONTROLS= 0.03557; // seconds, time interval between control signals�����ź�֮���ʱ����
 
     // observation parameters
     double MAX_RANGE= 30.0; // metres
-    //double DT_OBSERVE= 8*DT_CONTROLS; // seconds, time interval between observations�۲��ź�֮��ļ��
+    //rdouble DT_OBSERVE= 8*DT_CONTROLS; // seconds, time interval between observations�۲��ź�֮��ļ��
 
     // observation noises
     double sigmaR= 0.07; // metres

@@ -35,14 +35,14 @@ int main(int argc, char** argv){
 void Callback(std_msgs::Float64 ang){
     //ROS_INFO_STREAM("3");
     static int countCall=0;
-    std::cout<<"\n1:"<<countCall++;
-    CSC.Update_Slam_imu(ang.data/2000);
+    std::cout<<"\n1:"<<countCall++<<"ll"<<ang;
+    CSC.Update_Slam_imu(ang.data>=300?((ang.data-300)*20/75*3.1415926/180):((ang.data-300)*26/75*3.1415926/180));
 }
 
 void Callback2(std_msgs::Float64 _rpm){
 
     static int countCall=0;
-    std::cout<<"\n2:"<<countCall++;
+    std::cout<<"\n2:"<<countCall++<<"ll"<<_rpm;
     CSC.Update_Slam_rpm(_rpm.data*0.00045);
 
     double x,y,th;
