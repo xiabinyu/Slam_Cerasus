@@ -36,14 +36,22 @@ void Callback(std_msgs::Float64 ang){
     //ROS_INFO_STREAM("3");
     static int countCall=0;
     std::cout<<"\n1:"<<countCall++;
-    CSC.Update_Slam_imu(ang.data);
+    CSC.Update_Slam_imu(ang.data/2000);
 }
 
 void Callback2(std_msgs::Float64 _rpm){
 
     static int countCall=0;
     std::cout<<"\n2:"<<countCall++;
-    CSC.Update_Slam_rpm(_rpm.data);
+    CSC.Update_Slam_rpm(_rpm.data*0.00045);
+
+    double x,y,th;
+    geometry_msgs::Vector3 output;
+    CSC.Get_Slam(&x,&y,&th);
+    output.x=x;
+    output.y=y;
+    output.z=th;
+    slam_pub.publish(output);
 }
 
 void Callback3(sensor_msgs::LaserScan lidar){
@@ -58,14 +66,13 @@ void Callback3(sensor_msgs::LaserScan lidar){
             Data[count]=lidar.ranges[i];
         }
     }
-    CSC.Update_Slam(Data,count);
-    double x,y,th;
-    geometry_msgs::Vector3 output;
-    CSC.Get_Slam(&x,&y,&th);
-    output.x=x;
-    output.y=y;
-    output.z=th;
-    slam_pub.publish(output);
+    //double x,y,th;
+    //geometry_msgs::Vector3 output;
+    //CSC.Update_Slam(Data,count);
+   // output.x=x;
+   // output.y=y;
+   // output.z=th;
+   // slam_pub.publish(output);
    }
     
   //  static tf::TransformBroadcaster br;
