@@ -35,14 +35,14 @@ int main(int argc, char** argv){
 void Callback(std_msgs::Float64 ang){
     //ROS_INFO_STREAM("3");
     static int countCall=0;
-    std::cout<<"\n1:"<<countCall++<<"ll"<<ang;
+    //std::cout<<"\n1:"<<countCall++<<"ll"<<ang;
     CSC.Update_Slam_imu(ang.data>=300?((ang.data-300)*20/75*3.1415926/180):((ang.data-300)*26/75*3.1415926/180));
 }
 
 void Callback2(std_msgs::Float64 _rpm){
 
     static int countCall=0;
-    std::cout<<"\n2:"<<countCall++<<"ll"<<_rpm;
+    //std::cout<<"\n2:"<<countCall++<<"ll"<<_rpm;
     CSC.Update_Slam_rpm(_rpm.data*0.00045);
 
     double x,y,th;
@@ -52,13 +52,14 @@ void Callback2(std_msgs::Float64 _rpm){
     output.y=y;
     output.z=th;
     slam_pub.publish(output);
+
 }
 
 void Callback3(sensor_msgs::LaserScan lidar){
     //lidar.ranges[]
 
     static int countCall=0;
-    std::cout<<"\n3**********:"<<countCall++;
+    //std::cout<<"\n3**********:"<<countCall++;
     double Data[360];
     int count=0;
     for(int i=0;i<360;i++){
@@ -66,13 +67,16 @@ void Callback3(sensor_msgs::LaserScan lidar){
             Data[count]=lidar.ranges[i];
         }
     }
-    //double x,y,th;
-    //geometry_msgs::Vector3 output;
-    //CSC.Update_Slam(Data,count);
-   // output.x=x;
-   // output.y=y;
-   // output.z=th;
-   // slam_pub.publish(output);
+    double x,y,th;
+    geometry_msgs::Vector3 output;
+    CSC.Update_Slam(Data,count);
+
+    CSC.Get_Slam(&x,&y,&th);
+    std::cout<<x<<","<<y<<","<<th<<std::endl;
+    output.x=x;
+    output.y=y;
+    output.z=th;
+    slam_pub.publish(output);
    }
     
   //  static tf::TransformBroadcaster br;
