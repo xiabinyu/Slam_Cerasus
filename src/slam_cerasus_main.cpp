@@ -32,13 +32,20 @@ int main(int argc, char** argv){
 	return 0;
 }
 
-void Callback(std_msgs::Float64 ang){
+void Callback(std_msgs::Float64 ang) {
     //ROS_INFO_STREAM("3");
-    static int countCall=0;
-    std::cout<<"\n1:"<<countCall++<<"ll"<<ang;
-    CSC.Update_Slam_imu(ang.data>=300?((ang.data-300)*20/75*3.1415926/180):((ang.data-300)*26/75*3.1415926/180));
-}
+    static int countCall = 0;
+    std::cout << "\n1:" << countCall++ << "ll" << ang;
 
+    //378 224 300
+    if (ang.data == 300) {
+        CSC.Update_Slam_imu(0);
+    }else if(ang.data > 378){
+        CSC.Updata_Slam_imu(26.0*M_PI/180);
+    }else if(ang.data > 224){
+        CSC.Updata_Slam_imu(-26.0*M_PI/180);
+    }
+}
 void Callback2(std_msgs::Float64 _rpm){
 
     static int countCall=0;
